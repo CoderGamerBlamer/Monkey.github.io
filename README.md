@@ -1,1 +1,361 @@
 # Monkey.github.io
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>11.io — Personal Page</title>
+<meta name="description" content="11.io — Personal landing page with video game links, projects, and contact." />
+<!-- Simple favicon (emoji) -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E🎮%3C/text%3E%3C/svg%3E">
+
+<style>
+  /* ===== EDIT THEME COLORS HERE ===== */
+  :root{
+    --bg:#0f1724;         /* page background */
+    --card:#0b1220;       /* card background */
+    --muted:#94a3b8;      /* muted text */
+    --accent:#7c3aed;     /* accent (purple) */
+    --glass: rgba(255,255,255,0.03);
+    --radius:14px;
+    --max-width:980px;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Courier New", monospace;
+  }
+
+  /* === Reset / Base === */
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background:
+      radial-gradient(1200px 600px at 10% 10%, rgba(124,58,237,0.08), transparent 8%),
+      radial-gradient(900px 500px at 90% 90%, rgba(14,165,233,0.04), transparent 6%),
+      var(--bg);
+    color:#e6eef8;
+    -webkit-font-smoothing:antialiased;
+    padding:32px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+
+  .wrap{
+    width:100%;
+    max-width:var(--max-width);
+    display:grid;
+    grid-template-columns: 360px 1fr;
+    gap:28px;
+    align-items:start;
+  }
+
+  /* ===== LEFT / SIDEBAR ===== */
+  .card{
+    background:linear-gradient(180deg,var(--card), rgba(255,255,255,0.02));
+    border-radius:var(--radius);
+    padding:22px;
+    box-shadow: 0 6px 18px rgba(2,6,23,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+  }
+
+  .profile{
+    display:flex;
+    gap:14px;
+    align-items:center;
+  }
+  .avatar{
+    width:84px;height:84px;border-radius:12px;
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--mono); font-weight:700; font-size:26px; color:var(--muted);
+    flex-shrink:0;
+    overflow:hidden;
+  }
+  .profile h1{
+    margin:0;font-size:20px;
+    letter-spacing:0.6px;
+  }
+  .profile p.title{margin:4px 0 0;color:var(--muted);font-size:13px}
+
+  .bio{margin-top:16px;color:var(--muted);line-height:1.45;font-size:14px}
+
+  .links{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+  .chip{background:var(--glass);padding:8px 12px;border-radius:999px;font-size:13px;color:var(--muted);display:inline-flex;align-items:center;gap:8px}
+  .chip svg{opacity:.8;width:14px;height:14px}
+
+  /* ===== RIGHT / MAIN ===== */
+  .main{
+    display:flex;flex-direction:column;gap:18px;
+  }
+
+  .section-title{
+    display:flex;align-items:center;gap:12px;margin:0 0 8px;
+  }
+  .section-title h2{margin:0;font-size:16px}
+  .section-sub{color:var(--muted);font-size:13px;margin:0 0 8px}
+
+  /* Games grid */
+  .games-grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fill,minmax(160px,1fr));
+    gap:12px;
+  }
+  .game{
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px;
+    min-height:110px;justify-content:space-between;
+    transition:transform .12s ease, box-shadow .12s ease;
+  }
+  .game:hover{transform:translateY(-6px);box-shadow:0 12px 30px rgba(2,6,23,0.6)}
+  .game .title{font-weight:700}
+  .game .meta{color:var(--muted);font-size:13px}
+  .game .actions{display:flex;gap:8px;align-items:center}
+
+  .btn{
+    appearance:none;border:0;padding:8px 10px;border-radius:10px;font-weight:600;
+    background:linear-gradient(90deg,var(--accent), #4f46e5);color:white;cursor:pointer;font-size:13px;
+  }
+  .ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted)}
+
+  /* Projects list */
+  .projects{display:grid;gap:10px}
+  .project{
+    padding:12px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
+    display:flex;justify-content:space-between;align-items:center;gap:12px;
+  }
+  .project small{color:var(--muted)}
+
+  /* Footer / contact */
+  footer.contact{display:flex;gap:14px;align-items:center}
+  .socials{display:flex;gap:10px}
+  .socials a{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:10px;background:var(--glass);text-decoration:none;color:var(--muted);font-size:16px}
+
+  /* Responsive */
+  @media (max-width:880px){
+    .wrap{grid-template-columns:1fr; padding-bottom:24px}
+  }
+
+  /* Small accessibility helpers */
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+</style>
+</head>
+<body>
+  <!--
+    11.io — single-file personal webpage
+    HOW TO EDIT:
+      - Change display name in <h1 class="sitename"> and .avatar initial
+      - Edit bio text below (inside <p id="bio">)
+      - Replace / add game links in the #games element (each .game)
+      - Replace social/email links in the footer
+  -->
+
+  <div class="wrap" role="main">
+
+    <!-- LEFT: Profile card -->
+    <aside class="card" aria-labelledby="profile-heading">
+      <div class="profile">
+        <div class="avatar" id="avatar">11</div>
+        <div>
+          <h1 id="profile-heading">11.io</h1>
+          <p class="title">Indie gamer • Curator • Builder</p>
+        </div>
+      </div>
+
+      <p class="bio" id="bio">
+        Hi — this is a lightweight landing page for <strong>11.io</strong>. I share game picks, short projects, and links. Edit this bio in the HTML to introduce yourself (1–3 lines is perfect).
+      </p>
+
+      <div class="links" aria-hidden="false" style="margin-top:18px">
+        <span class="chip" title="Location"><svg viewBox="0 0 24 24" fill="none" aria-hidden><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Gaming Vibe</span>
+        <span class="chip"><svg viewBox="0 0 24 24" fill="none" aria-hidden><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Open to collabs</span>
+      </div>
+
+      <div style="margin-top:18px;display:flex;gap:10px">
+        <a class="btn" href="#games">View Games</a>
+        <button class="btn ghost" onclick="document.getElementById('edit-hint').classList.toggle('hidden')">Edit hints</button>
+      </div>
+
+      <p id="edit-hint" class="bio" style="margin-top:12px;display:none">
+        Tip: Search&replace "11.io" to change site title quickly. Replace avatar content with an &lt;img&gt; tag if you have a URL.
+      </p>
+    </aside>
+
+    <!-- RIGHT: Main content -->
+    <main class="main" aria-labelledby="main-heading">
+      <div>
+        <div class="section-title">
+          <h2 id="main-heading">Games</h2>
+          <small style="color:var(--muted)">Curated links — click to open in a new tab.</small>
+        </div>
+
+        <!-- GAMES GRID -->
+        <section id="games" class="games-grid" aria-label="Video game links">
+          <!-- NOTE: Replace these cards with your favorite games and URLs -->
+          <article class="game" data-game="Hades">
+            <div>
+              <div class="title">Hades</div>
+              <div class="meta">Roguelite action — Supergiant Games</div>
+            </div>
+            <div class="actions">
+              <a class="btn ghost" href="https://store.steampowered.com/app/1145360/Hades/" target="_blank" rel="noopener">Open Store</a>
+              <a class="btn" href="https://www.supergiantgames.com/games/hades/" target="_blank" rel="noopener">Official</a>
+            </div>
+          </article>
+
+          <article class="game" data-game="Elden Ring">
+            <div>
+              <div class="title">Elden Ring</div>
+              <div class="meta">Open-world action RPG — FromSoftware</div>
+            </div>
+            <div class="actions">
+              <a class="btn ghost" href="https://store.steampowered.com/app/1245620/ELDEN_RING/" target="_blank" rel="noopener">Open Store</a>
+              <a class="btn" href="https://en.bandainamcoent.eu/elden-ring/elden-ring" target="_blank" rel="noopener">Official</a>
+            </div>
+          </article>
+
+          <article class="game" data-game="Celeste">
+            <div>
+              <div class="title">Celeste</div>
+              <div class="meta">Precision platformer — Matt Makes Games</div>
+            </div>
+            <div class="actions">
+              <a class="btn ghost" href="https://store.steampowered.com/app/504230/Celeste/" target="_blank" rel="noopener">Open Store</a>
+              <a class="btn" href="https://www.celestegame.com/" target="_blank" rel="noopener">Official</a>
+            </div>
+          </article>
+
+          <article class="game" data-game="Stardew Valley">
+            <div>
+              <div class="title">Stardew Valley</div>
+              <div class="meta">Farming RPG — ConcernedApe</div>
+            </div>
+            <div class="actions">
+              <a class="btn ghost" href="https://store.steampowered.com/app/413150/Stardew_Valley/" target="_blank" rel="noopener">Open Store</a>
+              <a class="btn" href="https://www.stardewvalley.net/" target="_blank" rel="noopener">Official</a>
+            </div>
+          </article>
+
+          <article class="game" data-game="Hollow Knight">
+            <div>
+              <div class="title">Hollow Knight</div>
+              <div class="meta">Metroidvania — Team Cherry</div>
+            </div>
+            <div class="actions">
+              <a class="btn ghost" href="https://store.steampowered.com/app/367520/Hollow_Knight/" target="_blank" rel="noopener">Open Store</a>
+              <a class="btn" href="https://www.teamcherry.com.au/" target="_blank" rel="noopener">Official</a>
+            </div>
+          </article>
+
+          <!-- Example of adding your own custom link -->
+          <article class="game" data-game="Your Game">
+            <div>
+              <div class="title">Your Game — Placeholder</div>
+              <div class="meta">Replace this card with your own game and URLs</div>
+            </div>
+            <div class="actions">
+              <a class="btn ghost" href="#" target="_blank" rel="noopener">Open</a>
+              <a class="btn" href="#" target="_blank" rel="noopener">More</a>
+            </div>
+          </article>
+        </section>
+      </div>
+
+      <!-- Projects -->
+      <div>
+        <div class="section-title">
+          <h2>Projects</h2>
+          <small class="section-sub">Small tools, mods, or things I'm tinkering with.</small>
+        </div>
+        <section class="projects" aria-label="Projects">
+          <div class="project">
+            <div>
+              <div style="font-weight:700">Game Linker</div>
+              <small>Lightweight launcher & bookmark for my favorite titles.</small>
+            </div>
+            <div><a class="btn ghost" href="#" onclick="alert('Replace this with your project link')">Open</a></div>
+          </div>
+
+          <div class="project">
+            <div>
+              <div style="font-weight:700">Speedrun Notes</div>
+              <small>Strategies, routes, and resources for quick runs.</small>
+            </div>
+            <div><a class="btn ghost" href="#">Open</a></div>
+          </div>
+
+        </section>
+      </div>
+
+      <!-- Contact / Socials -->
+      <div>
+        <div class="section-title">
+          <h2>Contact</h2>
+          <small class="section-sub">Reach out for collabs, mod work, or game recommendations.</small>
+        </div>
+
+        <footer class="card contact" style="display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div>
+              <div style="font-weight:700">Get in touch</div>
+              <small class="section-sub">Email or socials below — replace with your links.</small>
+            </div>
+            <div>
+              <a class="btn" href="mailto:hello@11.io">Email Me</a>
+            </div>
+          </div>
+
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+            <div class="socials" aria-label="Social links">
+              <!-- Replace hrefs with your real profiles -->
+              <a href="https://github.com/" target="_blank" rel="noopener" title="GitHub">GH</a>
+              <a href="https://www.linkedin.com/" target="_blank" rel="noopener" title="LinkedIn">IN</a>
+              <a href="https://twitter.com/" target="_blank" rel="noopener" title="Twitter">TW</a>
+              <a href="https://www.instagram.com/" target="_blank" rel="noopener" title="Instagram">IG</a>
+            </div>
+
+            <div style="color:var(--muted);font-size:13px">© <span id="year"></span> 11.io</div>
+          </div>
+        </footer>
+      </div>
+
+    </main>
+  </div>
+
+<script>
+  // Small helpers
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // If you want to programmatically add games from a JSON blob:
+  // const games = [{title:'Game',meta:'...',store:'https://',official:'https://'}];
+  // renderGames(games);
+  function renderGames(list){
+    const container = document.getElementById('games');
+    container.innerHTML = '';
+    list.forEach(g => {
+      const art = document.createElement('article');
+      art.className = 'game';
+      art.innerHTML = `
+        <div>
+          <div class="title">${escapeHtml(g.title)}</div>
+          <div class="meta">${escapeHtml(g.meta||'')}</div>
+        </div>
+        <div class="actions">
+          <a class="btn ghost" href="${escapeAttr(g.store||'#')}" target="_blank" rel="noopener">Store</a>
+          <a class="btn" href="${escapeAttr(g.official||'#')}" target="_blank" rel="noopener">Official</a>
+        </div>
+      `;
+      container.appendChild(art);
+    });
+  }
+  function escapeHtml(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function escapeAttr(s){ return String(s||'#').replace(/"/g,'&quot;'); }
+
+  // Optional: keyboard shortcut "g" to jump to games.
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'g' && !e.metaKey && !e.ctrlKey){
+      e.preventDefault();
+      document.getElementById('games').scrollIntoView({behavior:'smooth', block:'center'});
+    }
+  });
+</script>
+</body>
+</html>
